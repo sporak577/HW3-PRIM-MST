@@ -2,6 +2,11 @@ import numpy as np
 import heapq
 from typing import Union
 
+"""
+I use chatgpt to help me identify code errors and give me inspiration
+on how to construct my code. 
+"""
+
 class Graph:
 
     def __init__(self, adjacency_mat: Union[np.ndarray, str]):
@@ -90,25 +95,26 @@ class Graph:
 
         #ensures that not all nodes are in the mst and checks if the heap is not empty
         while len(visited) < n and min_heap:
-            #removes the smallest edge and assigns it to weight, u, v
-            weight, u, v = heapq.heappop(min_heap)
-        
-        if v in visited: 
-            #continue skips the current interation of the loop and moves on to the next iteration
-            continue 
-
-        #add the edge to the mst adjacency matrix 
-        mst_matrix[u, v] = weight
-        mst_matrix[v, u] = weight
+                #removes the smallest edge and assigns it to weight, u, v
+                weight, u, v = heapq.heappop(min_heap)
             
-        visited.add(v)
+            if v in visited: 
+                #continue skips the current interation of the loop and moves on to the next iteration
+                continue 
 
-        #push all edged from the new node to the heap
-        for j in range(n):
-            if j not in visited and adj_matrix[v, j] > 0:
-                heapq.heappush(min_heap, (adj_matrix[v, j], v, j))
+            #add the edge to the mst adjacency matrix 
+            mst_matrix[u, v] = weight
+            mst_matrix[v, u] = weight
+                
+            visited.add(v)
+
+            #add new edges to the heap
+            for j in range(n):
+                if j not in visited and adj_matrix[v, j] > 0:
+                    heapq.heappush(min_heap, (adj_matrix[v, j], v, j))
         
-        return mst_matrix
+        self.mst = mst_matrix
+
         
 
 
