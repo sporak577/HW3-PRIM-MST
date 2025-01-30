@@ -35,6 +35,19 @@ def check_mst(adj_mat: np.ndarray,
             total += mst[i, j]
     assert approx_equal(total, expected_weight), 'Proposed MST has incorrect expected weight'
 
+    'assert all nodes are connected'
+    visited = set()
+    def dfs(node):
+        visited.add(node)
+        #the row is node, we extract the column index and the matrix entry
+        #enumerating basically iterates over all elements in that row, returning index and value
+        for neighbor, weight in enumerate(mst[node]):
+            if weight > 0 and neighbor not in visited:
+                dfs(neighbor)
+    
+    dfs(0) #starting from node 0 
+    #asserting that length of visited nodes is number of total nodes
+    assert len(visited) == len(mst)
 
 def test_mst_small():
     """
