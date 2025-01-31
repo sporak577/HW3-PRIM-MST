@@ -96,10 +96,11 @@ class Graph:
         #ensures that not all nodes are in the mst and checks if the heap is not empty
         while len(visited) < n and min_heap:
                 #removes the smallest edge and assigns it to weight, u, v
-                weight, u, v = heapq.heappop(min_heap)
+            weight, u, v = heapq.heappop(min_heap)
             
             if v in visited: 
                 #continue skips the current interation of the loop and moves on to the next iteration
+                #jumps immediately back to the condition of the while loop
                 continue 
 
             #add the edge to the mst adjacency matrix 
