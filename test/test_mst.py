@@ -3,6 +3,9 @@ import numpy as np
 from mst import Graph
 from sklearn.metrics import pairwise_distances
 
+"""
+as always using chatgpt to help with some issues
+"""
 
 def check_mst(adj_mat: np.ndarray, 
               mst: np.ndarray, 
@@ -49,6 +52,13 @@ def check_mst(adj_mat: np.ndarray,
     #asserting that length of visited nodes is number of total nodes
     assert len(visited) == len(mst)
 
+    'assert mst is not cyclic by ensuring it has exactly n-1 edges'
+    #np.sum counts all nonzero edges in the adjacency matrix, if it were cyclic it would have the
+    #exact same amount of edges as nodes. 
+    assert np.sum(mst != 0) // 2 == len(mst) - 1
+
+    
+
 def test_mst_small():
     """
     
@@ -82,6 +92,21 @@ def test_mst_student():
     """
     
     TODO: Write at least one unit test for MST construction.
+
+    Ensuring MST handles negative edge weights correctly
     
     """
+    adj_mat = np.array([
+        [0, 3, 0, 7, 0],
+        [3, 0, 1, 5, 0],
+        [0, 1, 0, 2, 8],
+        [7, 5, 2, 0, 6],
+        [0, 0, 8, 6, 0]
+    ])
+
+    g = Graph(adj_mat)
+    g.construct_mst()
+    #manually checked the expected weight by drawing the spanning tree on paper -> 12
+    check_mst(adj_mat, g.mst, 12)
+
     pass
